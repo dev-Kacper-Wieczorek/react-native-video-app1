@@ -24,9 +24,10 @@
     }
   },
   "include": [
-    "src",
-    "App.tsx"
-  ],
+  "src",
+  "App.tsx",
+  "src/declarations.d.ts"
+],
   "exclude": [
     "node_modules"
   ],

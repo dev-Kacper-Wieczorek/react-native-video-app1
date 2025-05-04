@@ -14,6 +14,8 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/types';
 import { searchVideos } from '../api/youtube';
 
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Search'>;
+
 interface YouTubeVideo {
   id: { videoId: string };
   snippet: {
@@ -22,8 +24,6 @@ interface YouTubeVideo {
     thumbnails: { medium: { url: string } };
   };
 }
-
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Search'>;
 
 const SearchScreen = () => {
   const navigation = useNavigation<NavigationProp>();
