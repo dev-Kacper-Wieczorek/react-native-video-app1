@@ -7,7 +7,11 @@ import {
   Text,
   Image,
   StyleSheet,
+  TouchableOpacity,
 } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../navigation/types';
 import { searchVideos } from '../api/youtube';
 
 interface YouTubeVideo {
@@ -19,13 +23,20 @@ interface YouTubeVideo {
   };
 }
 
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Search'>;
+
 const SearchScreen = () => {
+  const navigation = useNavigation<NavigationProp>();
   const [query, setQuery] = useState('');
   const [videos, setVideos] = useState<YouTubeVideo[]>([]);
 
   const handleSearch = async () => {
     const results = await searchVideos(query);
     setVideos(results);
+  };
+
+  const handlePress = (videoId: string) => {
+    navigation.navigate('Detail', { videoId });
   };
 
   return (
@@ -41,14 +52,16 @@ const SearchScreen = () => {
         data={videos}
         keyExtractor={(item) => item.id.videoId}
         renderItem={({ item }) => (
-          <View style={styles.videoCard}>
-            <Image
-              source={{ uri: item.snippet.thumbnails.medium.url }}
-              style={styles.thumbnail}
-            />
-            <Text style={styles.title}>{item.snippet.title}</Text>
-            <Text style={styles.channel}>{item.snippet.channelTitle}</Text>
-          </View>
+          <TouchableOpacity onPress={() => handlePress(item.id.videoId)}>
+            <View style={styles.videoCard}>
+              <Image
+                source={{ uri: item.snippet.thumbnails.medium.url }}
+                style={styles.thumbnail}
+              />
+              <Text style={styles.title}>{item.snippet.title}</Text>
+              <Text style={styles.channel}>{item.snippet.channelTitle}</Text>
+            </View>
+          </TouchableOpacity>
         )}
       />
     </View>
