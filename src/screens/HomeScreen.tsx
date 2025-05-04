@@ -5,23 +5,18 @@ import {
   StyleSheet,
   TouchableOpacity,
   FlatList,
+  Image,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/types';
 
-import SettingsIcon from '../../assets/icons/settings-icon.svg';
-import HomeIcon from '../../assets/icons/home-icon.svg';
-import PersonIcon from '../../assets/icons/person-icon.svg';
-import ViewsIcon from '../../assets/icons/views-icon.svg';
-import PlayIcon from '../../assets/icons/play-icon.svg';
-
 const categories = [
-  { id: '1', label: 'React Native', icon: HomeIcon, query: 'react native' },
-  { id: '2', label: 'React', icon: PersonIcon, query: 'react' },
-  { id: '3', label: 'JavaScript', icon: ViewsIcon, query: 'javascript' },
-  { id: '4', label: 'TypeScript', icon: PlayIcon, query: 'typescript' },
+  { id: '1', label: 'React Native', icon: require('../../assets/icons/home-icon.png'), query: 'react native' },
+  { id: '2', label: 'React', icon: require('../../assets/icons/person-icon.png'), query: 'react' },
+  { id: '3', label: 'JavaScript', icon: require('../../assets/icons/views-icon.png'), query: 'javascript' },
+  { id: '4', label: 'TypeScript', icon: require('../../assets/icons/play-icon.png'), query: 'typescript' },
 ];
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
@@ -55,7 +50,7 @@ const HomeScreen = () => {
             style={styles.categoryItem}
             onPress={() => handleCategoryPress(item.query)}
           >
-            <item.icon width={28} height={28} style={{ marginBottom: 6 }} />
+            <Image source={item.icon} style={styles.icon} />
             <Text>{item.label}</Text>
           </TouchableOpacity>
         )}
@@ -72,7 +67,10 @@ export const homeScreenOptions: NativeStackNavigationOptions = {
   title: 'Home',
   headerRight: () => (
     <TouchableOpacity onPress={() => console.log('Settings pressed')} style={{ marginRight: 16 }}>
-      <SettingsIcon width={24} height={24} />
+      <Image
+        source={require('../../assets/icons/settings-icon.png')}
+        style={{ width: 24, height: 24 }}
+      />
     </TouchableOpacity>
   ),
 };
@@ -111,6 +109,11 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: '#f0f0f0',
     borderRadius: 8,
+  },
+  icon: {
+    width: 28,
+    height: 28,
+    marginBottom: 6,
   },
   showMore: {
     color: '#007AFF',

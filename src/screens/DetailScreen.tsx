@@ -4,18 +4,11 @@ import {
   StyleSheet,
   Dimensions,
   TouchableOpacity,
+  Image,
 } from 'react-native';
 import Video, { VideoRef } from 'react-native-video';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { RootStackParamList } from '../navigation/types';
-
-import PlayIcon from '../../assets/icons/play-icon.svg';
-import PauseIcon from '../../assets/icons/pause-icon.svg';
-import VolumeIcon from '../../assets/icons/volume-icon.svg';
-import AirplayIcon from '../../assets/icons/airplay-icon.svg';
-import ForwardIcon from '../../assets/icons/forward-icon.svg';
-import BackwardIcon from '../../assets/icons/backward-icon.svg';
-import FullscreenIcon from '../../assets/icons/fullscreen-icon.svg';
 
 const DetailScreen = () => {
   const route = useRoute<RouteProp<RootStackParamList, 'Detail'>>();
@@ -46,34 +39,62 @@ const DetailScreen = () => {
 
       <View style={styles.controls}>
         <ControlButton onPress={togglePlayPause}>
-          {isPlaying ? <PauseIcon width={24} height={24} /> : <PlayIcon width={24} height={24} />}
+          <Image
+            source={
+              isPlaying
+                ? require('../../assets/icons/pause-icon.png')
+                : require('../../assets/icons/play-icon.png')
+            }
+            style={styles.icon}
+          />
         </ControlButton>
 
         <ControlButton onPress={toggleMute}>
-          <VolumeIcon width={24} height={24} />
+          <Image
+            source={require('../../assets/icons/volume-icon.png')}
+            style={styles.icon}
+          />
         </ControlButton>
 
         <ControlButton onPress={() => playerRef.current?.seek(0)}>
-          <BackwardIcon width={24} height={24} />
+          <Image
+            source={require('../../assets/icons/backward-icon.png')}
+            style={styles.icon}
+          />
         </ControlButton>
 
         <ControlButton onPress={() => playerRef.current?.seek(60)}>
-          <ForwardIcon width={24} height={24} />
+          <Image
+            source={require('../../assets/icons/forward-icon.png')}
+            style={styles.icon}
+          />
         </ControlButton>
 
         <ControlButton onPress={() => playerRef.current?.presentFullscreenPlayer()}>
-          <FullscreenIcon width={24} height={24} />
+          <Image
+            source={require('../../assets/icons/fullscreen-icon.png')}
+            style={styles.icon}
+          />
         </ControlButton>
 
         <ControlButton onPress={() => console.log('AirPlay')}>
-          <AirplayIcon width={24} height={24} />
+          <Image
+            source={require('../../assets/icons/airplay-icon.png')}
+            style={styles.icon}
+          />
         </ControlButton>
       </View>
     </View>
   );
 };
 
-const ControlButton = ({ children, onPress }: { children: React.ReactNode; onPress: () => void }) => (
+const ControlButton = ({
+  children,
+  onPress,
+}: {
+  children: React.ReactNode;
+  onPress: () => void;
+}) => (
   <TouchableOpacity style={styles.button} onPress={onPress}>
     {children}
   </TouchableOpacity>
@@ -104,5 +125,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     margin: 6,
     elevation: 3,
+  },
+  icon: {
+    width: 24,
+    height: 24,
   },
 });

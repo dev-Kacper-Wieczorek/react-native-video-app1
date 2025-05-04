@@ -13,12 +13,6 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/types';
 import { searchVideos } from '../api/youtube';
 
-import SearchIcon from '../../assets/icons/search-icon.svg';
-import ClockIcon from '../../assets/icons/clock-icon.svg';
-import ViewsIcon from '../../assets/icons/views-icon.svg';
-import LikesIcon from '../../assets/icons/likes-icon.svg';
-import PersonIcon from '../../assets/icons/person-icon.svg';
-
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Search'>;
 
 interface YouTubeVideo {
@@ -47,7 +41,7 @@ const SearchScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.searchBar}>
-        <SearchIcon width={20} height={20} style={styles.icon} />
+        <Image source={require('../../assets/icons/search-icon.png')} style={styles.icon} />
         <TextInput
           style={styles.input}
           placeholder="Search for videos..."
@@ -56,7 +50,7 @@ const SearchScreen = () => {
         />
       </View>
       <TouchableOpacity style={styles.sortContainer}>
-        <ClockIcon width={18} height={18} />
+        <Image source={require('../../assets/icons/clock-icon.png')} style={styles.iconSmall} />
         <Text style={styles.sortText}>Sort by: Latest</Text>
       </TouchableOpacity>
 
@@ -72,13 +66,13 @@ const SearchScreen = () => {
               />
               <Text style={styles.title}>{item.snippet.title}</Text>
               <View style={styles.metaRow}>
-                <PersonIcon width={16} height={16} />
+                <Image source={require('../../assets/icons/person-icon.png')} style={styles.metaIcon} />
                 <Text style={styles.channel}>{item.snippet.channelTitle}</Text>
               </View>
               <View style={styles.metaRow}>
-                <ViewsIcon width={16} height={16} />
+                <Image source={require('../../assets/icons/views-icon.png')} style={styles.metaIcon} />
                 <Text style={styles.metaText}>12K views</Text>
-                <LikesIcon width={16} height={16} style={styles.likeIcon} />
+                <Image source={require('../../assets/icons/likes-icon.png')} style={[styles.metaIcon, styles.likeIcon]} />
                 <Text style={styles.metaText}>1.5K likes</Text>
               </View>
             </View>
@@ -107,7 +101,13 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   icon: {
+    width: 20,
+    height: 20,
     marginRight: 8,
+  },
+  iconSmall: {
+    width: 18,
+    height: 18,
   },
   input: {
     flex: 1,
@@ -138,6 +138,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: 4,
+  },
+  metaIcon: {
+    width: 16,
+    height: 16,
   },
   metaText: {
     marginLeft: 4,

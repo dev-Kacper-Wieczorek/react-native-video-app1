@@ -1,4 +1,3 @@
-// src/components/CategoryList.tsx
 import React from 'react';
 import {
   View,
