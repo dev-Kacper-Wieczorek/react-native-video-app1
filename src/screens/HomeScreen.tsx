@@ -39,24 +39,20 @@ const HomeScreen = () => {
 
       <Text style={styles.sectionTitle}>Popular Categories</Text>
 
-      <FlatList
-        data={categories}
-        keyExtractor={(item) => item.id}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.listContainer}
-        renderItem={({ item }) => (
+      <View style={styles.listContainer}>
+        {categories.map((item) => (
           <TouchableOpacity
+            key={item.id}
             style={styles.categoryItem}
             onPress={() => handleCategoryPress(item.query)}
           >
             <Image source={item.icon} style={styles.icon} />
-            <Text>{item.label}</Text>
+            <Text style={styles.categoryLabel}>{item.label}</Text>
           </TouchableOpacity>
-        )}
-      />
+        ))}
+      </View>
 
-      <TouchableOpacity onPress={handleShowMore}>
+      <TouchableOpacity onPress={handleShowMore} style={styles.showMoreBtn}>
         <Text style={styles.showMore}>Show more →</Text>
       </TouchableOpacity>
     </View>
@@ -87,37 +83,49 @@ const styles = StyleSheet.create({
   welcome: {
     fontSize: 20,
     fontWeight: 'bold',
+    fontFamily: 'Poppins-Bold',
     marginBottom: 8,
   },
   subtext: {
     fontSize: 14,
     color: '#555',
+    fontFamily: 'Poppins-Regular',
     marginBottom: 20,
   },
   sectionTitle: {
     fontSize: 16,
     fontWeight: '600',
+    fontFamily: 'Poppins-Bold',
     marginBottom: 10,
   },
   listContainer: {
-    paddingBottom: 10,
+    flexDirection: 'column',
+    gap: 12,
+    marginBottom: 20,
   },
   categoryItem: {
+    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: 16,
-    padding: 10,
+    padding: 12,
     backgroundColor: '#f0f0f0',
     borderRadius: 8,
   },
   icon: {
     width: 28,
     height: 28,
-    marginBottom: 6,
+    marginRight: 10,
+  },
+  categoryLabel: {
+    fontFamily: 'Poppins-Regular',
+    fontSize: 16,
+  },
+  showMoreBtn: {
+    alignItems: 'center',
   },
   showMore: {
     color: '#007AFF',
     marginTop: 16,
     fontWeight: '500',
+    fontFamily: 'Poppins-Regular',
   },
 });
