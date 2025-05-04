@@ -19,8 +19,8 @@ const DetailScreen = () => {
   const [isMuted, setIsMuted] = useState(false);
 
   const videoSource = videoId
-    ? { uri: `https://www.youtube.com/watch?v=${videoId}` }
-    : require('../../assets/video/broadchurch.mp4');
+    ? { uri: 'https://bitmovin-a.akamaihd.net/content/sintel/hls/playlist.m3u8' } // <- Zgodne z instrukcją
+    : require('../../assets/video/broadchurch.mp4'); // fallback
 
   const togglePlayPause = () => setIsPlaying(prev => !prev);
   const toggleMute = () => setIsMuted(prev => !prev);
