@@ -29,13 +29,8 @@ const DetailScreen = () => {
     ? { uri: `https://www.youtube.com/watch?v=${videoId}` }
     : require('../../assets/video/broadchurch.mp4');
 
-  const togglePlayPause = () => {
-    setIsPlaying((prev) => !prev);
-  };
-
-  const toggleMute = () => {
-    setIsMuted((prev) => !prev);
-  };
+  const togglePlayPause = () => setIsPlaying(prev => !prev);
+  const toggleMute = () => setIsMuted(prev => !prev);
 
   return (
     <View style={styles.container}>
@@ -50,28 +45,39 @@ const DetailScreen = () => {
       />
 
       <View style={styles.controls}>
-        <TouchableOpacity onPress={togglePlayPause}>
+        <ControlButton onPress={togglePlayPause}>
           {isPlaying ? <PauseIcon width={24} height={24} /> : <PlayIcon width={24} height={24} />}
-        </TouchableOpacity>
-        <TouchableOpacity onPress={toggleMute}>
+        </ControlButton>
+
+        <ControlButton onPress={toggleMute}>
           <VolumeIcon width={24} height={24} />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => playerRef.current?.seek(0)}>
+        </ControlButton>
+
+        <ControlButton onPress={() => playerRef.current?.seek(0)}>
           <BackwardIcon width={24} height={24} />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => playerRef.current?.seek(60)}>
+        </ControlButton>
+
+        <ControlButton onPress={() => playerRef.current?.seek(60)}>
           <ForwardIcon width={24} height={24} />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => playerRef.current?.presentFullscreenPlayer()}>
+        </ControlButton>
+
+        <ControlButton onPress={() => playerRef.current?.presentFullscreenPlayer()}>
           <FullscreenIcon width={24} height={24} />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => console.log('AirPlay')}>
+        </ControlButton>
+
+        <ControlButton onPress={() => console.log('AirPlay')}>
           <AirplayIcon width={24} height={24} />
-        </TouchableOpacity>
+        </ControlButton>
       </View>
     </View>
   );
 };
+
+const ControlButton = ({ children, onPress }: { children: React.ReactNode; onPress: () => void }) => (
+  <TouchableOpacity style={styles.button} onPress={onPress}>
+    {children}
+  </TouchableOpacity>
+);
 
 export default DetailScreen;
 
@@ -86,8 +92,17 @@ const styles = StyleSheet.create({
   },
   controls: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginTop: 20,
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    marginTop: 30,
+    gap: 16,
     paddingHorizontal: 20,
+  },
+  button: {
+    backgroundColor: '#1c1c1e',
+    padding: 12,
+    borderRadius: 10,
+    margin: 6,
+    elevation: 3,
   },
 });

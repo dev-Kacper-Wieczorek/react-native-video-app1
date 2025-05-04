@@ -1,3 +1,4 @@
+// src/components/CategoryList.tsx
 import React from 'react';
 import {
   View,
@@ -15,6 +16,10 @@ const categories = ['React Native', 'React', 'TypeScript', 'JavaScript'];
 const CategoryList = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
+  const handleCategoryPress = (query: string) => {
+    navigation.navigate('Search', { query });
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Popular Categories</Text>
@@ -24,14 +29,14 @@ const CategoryList = () => {
         keyExtractor={(item) => item}
         showsHorizontalScrollIndicator={false}
         renderItem={({ item }) => (
-          <TouchableOpacity style={styles.card}>
+          <TouchableOpacity style={styles.card} onPress={() => handleCategoryPress(item)}>
             <Text style={styles.cardText}>{item}</Text>
           </TouchableOpacity>
         )}
       />
       <TouchableOpacity
         style={styles.showMoreBtn}
-        onPress={() => navigation.navigate('Search')}
+        onPress={() => navigation.navigate('Search', { query: '' })}
       >
         <Text style={styles.showMoreText}>Show more →</Text>
       </TouchableOpacity>
