@@ -30,8 +30,13 @@ const SearchScreen = () => {
   const [videos, setVideos] = useState<YouTubeVideo[]>([]);
 
   const handleSearch = async () => {
-    const results = await searchVideos(query);
-    setVideos(results);
+    if (!query.trim()) return;
+    try {
+      const results = await searchVideos(query);
+      setVideos(results);
+    } catch (error) {
+      console.error('Search failed:', error);
+    }
   };
 
   const handlePress = (videoId: string) => {
@@ -47,8 +52,10 @@ const SearchScreen = () => {
           placeholder="Search for videos..."
           value={query}
           onChangeText={setQuery}
+          onSubmitEditing={handleSearch}
         />
       </View>
+
       <TouchableOpacity style={styles.sortContainer}>
         <Image source={require('../../assets/icons/clock-icon.png')} style={styles.iconSmall} />
         <Text style={styles.sortText}>Sort by: Latest</Text>

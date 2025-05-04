@@ -16,7 +16,7 @@ export default function App() {
         <Stack.Screen 
           name="Home" 
           component={HomeScreen} 
-          options={homeScreenOptions} // ✅ custom nagłówek z ikoną
+          options={homeScreenOptions} 
         />
         <Stack.Screen 
           name="Search" 

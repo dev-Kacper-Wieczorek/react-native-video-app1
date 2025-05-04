@@ -14,6 +14,7 @@ export const searchVideos = async (query: string) => {
         key: YOUTUBE_API_KEY,
       },
     });
+
     return response.data.items;
   } catch (error) {
     console.error('YouTube API error:', error);

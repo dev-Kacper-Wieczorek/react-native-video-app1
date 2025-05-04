@@ -34,7 +34,7 @@ const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.welcome}>Welcome, Kacper 👋</Text>
+      <Text style={styles.welcome}>Welcome</Text>
       <Text style={styles.subtext}>Choose a category to start learning</Text>
 
       <Text style={styles.sectionTitle}>Popular Categories</Text>
