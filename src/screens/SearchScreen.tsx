@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   TextInput,
@@ -8,7 +8,7 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/types';
 import { searchVideos } from '../api/youtube';
@@ -26,13 +26,24 @@ interface YouTubeVideo {
 
 const SearchScreen = () => {
   const navigation = useNavigation<NavigationProp>();
+  const route = useRoute<RouteProp<RootStackParamList, 'Search'>>();
+
   const [query, setQuery] = useState('');
   const [videos, setVideos] = useState<YouTubeVideo[]>([]);
 
-  const handleSearch = async () => {
-    if (!query.trim()) return;
+  useEffect(() => {
+    if (route.params?.query) {
+      setQuery(route.params.query);
+      handleSearch(route.params.query);
+    }
+  }, [route.params?.query]);
+
+  const handleSearch = async (customQuery?: string) => {
+    const finalQuery = customQuery || query;
+    if (!finalQuery.trim()) return;
+
     try {
-      const results = await searchVideos(query);
+      const results = await searchVideos(finalQuery);
       setVideos(results);
     } catch (error) {
       console.error('Search failed:', error);
@@ -52,7 +63,7 @@ const SearchScreen = () => {
           placeholder="Search for videos..."
           value={query}
           onChangeText={setQuery}
-          onSubmitEditing={handleSearch}
+          onSubmitEditing={() => handleSearch()}
         />
       </View>
 
